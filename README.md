@@ -5,6 +5,10 @@
 
 ## 🖥️ Tecnologias que serão aplicadas
  - Java
+ - HTML
+ - CSS
+ - JavaScript
+ - SpringBoot
  - MySQL
  - Git & GitHub
 
