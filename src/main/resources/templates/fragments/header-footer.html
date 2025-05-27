@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo} + ' - Loja de Móveis'"></title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Cabeçalho Fixo -->
+    <header class="cabecalho">
+        <div class="logo">
+            <img src="/images/icons/logo.png" alt="Logo da Loja" class="logo-img">
+        </div>
+        
+        <div class="busca">
+            <input type="text" id="input-busca" placeholder="Buscar produtos...">
+            <button onclick="filtrarProdutos()" class="btn-busca">
+                <img src="/images/icons/search.png" alt="Buscar">
+            </button>
+        </div>
+
+
+        <div class="carrinho">
+            <a href="/carrinho" class="btn-carrinho">
+                <img src="/images/icons/carrinho.png" alt="Carrinho" class="icone-carrinho">
+                <span id="contador-carrinho">0</span>
+            </a>
+        </div>
+    </header>
+
+    <main th:insert="~{conteudo}"></main>
+
+    <!-- Rodapé Fixo -->
+    <footer class="rodape">
+        <div class="contato">
+            <p>📞 (71) 1234-5678</p>
+            <p>📧 contato@moveis.com.br</p>
+            <p>📍 Rua Belas Flores, Centro, Salvador</p>
+        </div>
+        <div class="redes-sociais">
+            <a href="#"><img src="/images/icons/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="/images/icons/instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="/images/icons/whatsapp.png" alt="WhatsApp"></a>
+        </div>
+    </footer>
+
+    <script src="/js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/header-footer :: html(titulo='Checkout')}">
+<body>
+    <div th:fragment="conteudo">
+        <section class="checkout">
+            <h1>Finalizar Compra</h1>
+            
+            <form id="form-checkout">
+                <div class="dados-pessoais">
+                    <h2>Dados Pessoais</h2>
+                    <input type="text" name="nome" placeholder="Nome Completo" required>
+                    <input type="email" name="email" placeholder="E-mail" required>
+                    <input type="tel" name="telefone" placeholder="Telefone" required>
+                </div>
+
+                <div class="pagamento">
+                    <h2>Forma de Pagamento</h2>
+                    <select id="metodo-pagamento">
+                        <option value="credito">Cartão de Crédito</option>
+                        <option value="pix">PIX</option>
+                        <option value="boleto">Boleto</option>
+                    </select>
+                    
+                    <div id="dados-cartao" class="campo-oculto">
+                        <input type="text" placeholder="Número do Cartão">
+                        <input type="text" placeholder="Validade (MM/AA)">
+                        <input type="text" placeholder="CVV">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-confirmar">Confirmar Pagamento</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
