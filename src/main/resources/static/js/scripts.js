@@ -89,6 +89,29 @@ function atualizarCarrinho() {
     calcularTotal();
 }
 
+function adicionarAoCarrinho(id, nome, preco, imagemNome) {
+  const existente = carrinho.find(item => item.id === id);
+  if (existente) {
+    existente.quantidade++;
+  } else {
+    carrinho.push({
+      id: id,
+      nome: nome,
+      preco: preco,
+      imagem: `/images/produtos/${imagemNome}`,
+      quantidade: 1
+    });
+  }
+
+    salvarCarrinho();               // → já grava no localStorage
+    atualizarContadorCarrinho();    // → atualiza o badge do carrinho
+
+    // só redesenha a lista se estivermos na page carrinho
+    if (document.getElementById('lista-itens')) {
+        atualizarCarrinho();
+    }
+}
+
 function calcularTotal() {
     const subtotal = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
     const frete = subtotal > 1000 ? 0 : 50;
@@ -144,15 +167,57 @@ function configurarPagamento() {
 // Inicialização
 // =======================
 document.addEventListener('DOMContentLoaded', () => {
-    atualizarContadorCarrinho();
-    atualizarCarrinho();
-    configurarPagamento();
+  // Carrinho
+  atualizarContadorCarrinho();
+  atualizarCarrinho();
 
-    const formCheckout = document.getElementById('form-checkout');
-    if (formCheckout) {
-        formCheckout.addEventListener('submit', e => {
-            e.preventDefault();
-            finalizarCompra();
-        });
-    }
+  // Checkout
+  configurarPagamento();
+  const formCheckout = document.getElementById('form-checkout');
+  if (formCheckout) {
+    formCheckout.addEventListener('submit', e => {
+      e.preventDefault();
+      finalizarCompra();
+    });
+  }
+
+   // Pesquisa de Produtos
+  const buscaInput = document.getElementById('input-busca');
+  const btnBusca   = document.getElementById('btn-busca');
+
+  function filtrar() {
+    const termo = buscaInput.value.toLowerCase().trim();
+    document.querySelectorAll('.produto-card').forEach(card => {
+      // título
+      const nome = card.querySelector('h3').textContent.toLowerCase();
+      // descrição (se existir)
+      const descElem = card.querySelector('.descricao');
+      const desc     = descElem ? descElem.textContent.toLowerCase() : '';
+      card.style.display = (nome.includes(termo) || desc.includes(termo))
+        ? '' : 'none';
+    });
+  }
+  
+  if (buscaInput) {
+    buscaInput.addEventListener('input', filtrar);
+  }
+  if (btnBusca) {
+    btnBusca.addEventListener('click', filtrar);
+  }
 });
+
+
+document.querySelectorAll('.btn-adicionar').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id     = Number(btn.dataset.id);
+    const nome   = btn.dataset.nome;
+    const preco  = Number(btn.dataset.preco);
+    const imagem = btn.dataset.imagem;
+    adicionarAoCarrinho(id, nome, preco, imagem);
+  });
+});
+
+
+
+
+

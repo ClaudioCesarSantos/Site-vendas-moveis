@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/header-footer :: html(titulo='Produtos')}">
+
+  <div th:fragment="conteudo">
+    <section class="produtos">
+      <h1 th:text="${categoria} != null ? 'Categoria: ' + ${categoria} : 'Todos os Produtos'">
+        Todos os Produtos
+      </h1>
+
+      <div class="grid-produtos">
+        <div class="produto-card" th:each="produto : ${produtos}">
+          <img th:src="@{|/images/produtos/${produto.imagem}|}"
+            th:alt="${produto.nome}"
+            class="imagem-card"/>
+          <h3 th:text="${produto.nome}">Nome do Produto</h3>
+          <p class="descricao" th:text="${produto.descricao}">
+            Descrição do Produto
+          </p>
+          <p class="preco"
+             th:text="'R$ ' + ${#numbers.formatDecimal(produto.preco, 1, 2)}">
+             R$ 0,00
+          </p>
+          <a th:href="@{'/detalhes/' + ${produto.id}}"
+             class="btn-detalhes">Ver Detalhes</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</html>

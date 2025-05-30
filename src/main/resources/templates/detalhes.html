@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-<html th:replace="~{fragments/header-footer :: html(titulo='Detalhes')}">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/header-footer :: html(titulo='Detalhes')}">
 <body>
-    <div th:fragment="conteudo">
-        <section class="detalhes-produto">
-            <div class="imagem-produto">
-                <img th:src="@{/images/produtos/{nomeImagem}(nomeImagem=${produto.imagem})}" 
-                     alt="Imagem do Produto" class="imagem-grande">
-            </div>
-            
-            <div class="info-produto">
-                <h2 th:text="${produto.nome}">Nome do Produto</h2>
-                <p class="preco" th:text="'R$ ' + ${#numbers.formatDecimal(produto.preco, 1, 2, 'POINT')}">R$ 0,00</p>
-                <p class="descricao" th:text="${produto.descricao}">Descrição detalhada do produto.</p>
-                
-                <div class="acoes">
-                    <input type="number" id="quantidade" min="1" value="1">
-                    <button class="btn-adicionar" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </section>
-    </div>
+  <div th:fragment="conteudo">
+    <section class="detalhes-produto">
+      <div class="imagem-produto">
+        <!-- usando filename apenas -->
+        <img th:src="@{|/images/produtos/${produto.imagem}|}"
+             th:alt="${produto.nome}"
+             class="imagem-grande"/>
+      </div>
+      <div class="info-produto">
+        <h2 th:text="${produto.nome}">Nome do Produto</h2>
+        <p class="preco"
+           th:text="'R$ ' + ${#numbers.formatDecimal(produto.preco, 2, 2, 'POINT')}">
+           R$ 0,00
+        </p>
+        <p class="descricao" th:text="${produto.descricao}">
+          Descrição detalhada do produto.
+        </p>
+        <div class="acoes">
+          <input type="number" id="quantidade" min="1" value="1">
+          <button class="btn-adicionar"
+                  th:data-id="${produto.id}"
+                  th:data-nome="${produto.nome}"
+                  th:data-preco="${produto.preco}"
+                  th:data-imagem="${produto.imagem}">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
